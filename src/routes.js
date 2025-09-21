@@ -1,14 +1,22 @@
 const express = require('express');
-const ONGCont = require('./controllers/ONG');
+const Cadastro = require('./controllers/cadastro');
+const Login = require('./controllers/login');
+const protection = require('./middleware/protection');
 
 const routes = express.Router();
 
-routes.get('/',ONGCont.allusers);
-routes.get('/:ong_nome',ONGCont.allusersforname);
-routes.get('/concod/:ong_cod',ONGCont.allusersforcod);
-routes.post('/create',ONGCont.usercreate);
-routes.put('/alterar/:ong_cod',ONGCont.userupdate)
-routes.delete('/deletar/:ong_cod',ONGCont.userdelete)
+//rotas para cadastro
+
+routes.get('/',protection ,Cadastro.allusers);
+routes.get('/nome/:usu_nome',Cadastro.allusersforname);
+routes.get('/codigo/:usu_cod',Cadastro.allusersforcod);
+routes.post('/criar',Cadastro.usercreate);
+routes.put('/alterar/:usu_cod',Cadastro.userupdate)
+routes.delete('/deletar/:usu_cod',Cadastro.userdelete)
+
+//rota para login
+
+routes.get('/login', Login.login)
 
 
 module.exports = routes;
