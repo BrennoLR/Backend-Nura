@@ -34,4 +34,4 @@ module.exports = {
             return res.status(500).send({ Message: "Erro do servidor!" });
         }
     }
-};
+}

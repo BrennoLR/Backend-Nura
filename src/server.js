@@ -7,4 +7,6 @@ app.use(cors());
 app.use(express.json());
 app.use(routes)
 
-app.listen(8764, ()=> console.log('Servidor na porta 8764'));
+app.listen(process.env.PORTA_SERVIDOR ?? 1914, 
+    ()=> process.env.PORTA_SERVIDOR ? console.log('Servidor ativo na porta: ' + process.env.PORTA_SERVIDOR) : 
+    console.log('Servidor ativo na porta definida por padrão: ' + (process.env.PORTA_SERVIDOR ?? 1914)));
