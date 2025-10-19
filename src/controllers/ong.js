@@ -2,28 +2,28 @@ const knex = require('../data/index');
 const bcrypt = require('bcrypt');
 
 module.exports = {
-    async alldoador(req, res) {
-        const allusers = await knex('doador').orderBy('usu_cod');
+    async allong(req, res) {
+        const allusers = await knex('ong').orderBy('usu_cod');
         return res.status(200).send(allusers);
     },
-    async alldoadorforname(req, res) {
+    async allongforname(req, res) {
         const { usu_nome } = req.params;
-        const allusersforname = await knex('doador').where('usu_nome', 'like', '%' + usu_nome + '%').orderBy('usu_cod');
+        const allusersforname = await knex('ong').where('usu_nome', 'like', '%' + usu_nome + '%').orderBy('usu_cod');
         return res.status(200).send(allusersforname);
     },
-    async alldoadorforcod(req, res) {
+    async allongforcod(req, res) {
         const { usu_cod } = req.params;
-        const allusersforcod = await knex('doador').where('usu_cod', '=', usu_cod).orderBy('usu_cod');
+        const allusersforcod = await knex('ong').where('usu_cod', '=', usu_cod).orderBy('usu_cod');
         return res.status(200).send(allusersforcod);
     },
-    async doadorcreate(req, res) {
+    async ongcreate(req, res) {
         const { usu_nome } = req.body;
         const { usu_email } = req.body;
         const { usu_cnpj } = req.body
         const usu_senha = await bcrypt.hash(req.body.usu_senha, 10);
         const { usu_tipo } = req.body;
 
-        await knex('doador').insert({
+        await knex('ong').insert({
             "usu_nome": usu_nome,
             "usu_email": usu_email,
             "usu_senha": usu_senha,
@@ -32,29 +32,29 @@ module.exports = {
         });
         return res.status(201).send({ Message: "Dados Inseridos" });
     },
-    async doadorupdate(req, res) {
+    async ongupdate(req, res) {
         const { usu_cod } = req.params;
         const { usu_nome } = req.body;
         const { usu_telefone } = req.body
         const { usu_datanasc } = req.body
         const { usu_cnpj } = req.body
         const usu_senha = await bcrypt.hash(req.body.usu_senha, 10);
-        const { doa_genero } = req.body
+        const { vol_genero } = req.body
 
-        await knex('doador').update({
+        await knex('ong').update({
             usu_nome,
             usu_senha,
             usu_telefone,
             usu_datanasc,
             usu_cnpj,
-            doa_genero,
+            vol_genero,
         }).where({ usu_cod });
         return res.status(201).send({ Message: "Dados alterados" })
     },
-    async doadordelete(req, res) {
+    async ongdelete(req, res) {
         const { usu_cod } = req.params;
         if (await this.verifycod(usu_cod)) {
-            await knex('doador')
+            await knex('ong')
                 .where({ usu_cod })
                 .del();
             return res.status(200).send({ Message: "Dados deletados" });

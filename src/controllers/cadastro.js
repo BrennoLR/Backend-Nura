@@ -1,7 +1,6 @@
 const knex = require('../data/index');
 const bcrypt = require('bcrypt');
 
-
 module.exports = {
 
     async verifyemail(usu_email) {
@@ -32,18 +31,16 @@ module.exports = {
     async usercreate(req, res) {
         const { usu_nome } = req.body;
         const { usu_email } = req.body;
-        const { usu_telefone } = req.body
-        const { usu_genero } = req.body
         const { usu_cnpj } = req.body
         const usu_senha = await bcrypt.hash(req.body.usu_senha, 10);
+        const { usu_tipo } = req.body;
 
         await knex('usuarios').insert({
             "usu_nome": usu_nome,
             "usu_email": usu_email,
             "usu_senha": usu_senha,
-            "usu_telefone": usu_telefone,
-            "usu_genero": usu_genero,
             "usu_cnpj": usu_cnpj,
+            "usu_tipo": usu_tipo
         });
         return res.status(201).send({ Message: "Dados Inseridos" });
     },
